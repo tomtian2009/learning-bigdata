@@ -49,7 +49,7 @@ public class HBaseUtils {
     //创建表
     public static void creatTable(String tableName, String[] cfs) throws IOException {
         if (tableExists(tableName)) {
-            System.out.println("该表已存在...");
+            System.out.println(tableName + " 表已存在...");
             return;
         }
 
@@ -95,6 +95,9 @@ public class HBaseUtils {
         put.addColumn(Bytes.toBytes(cf),Bytes.toBytes(columnName),Bytes.toBytes(value));
         table.put(put);
 
+        //关闭表资源
+        table.close();
+
     }
 
     private static void initData(String tableName) throws IOException {
@@ -131,6 +134,9 @@ public class HBaseUtils {
         delete.addColumns(Bytes.toBytes(cf),Bytes.toBytes(columnName)); // 删除所有版本
         table.delete(delete);
 
+        //关闭表资源
+        table.close();
+
     }
 
     //全表扫描
@@ -144,6 +150,9 @@ public class HBaseUtils {
         for (Result result : scanner) {
             printResult(result);
         }
+
+        //关闭表资源
+        table.close();
     }
 
     //查找数据
@@ -156,9 +165,13 @@ public class HBaseUtils {
         Result result = table.get(get);
         printResult(result);
 
+        //关闭表资源
+        table.close();
+
 
     }
 
+    // 打印单元格结果
     public static void printResult(Result result) {
 //        System.out.println(result);
         Cell[] cells = result.rawCells();
