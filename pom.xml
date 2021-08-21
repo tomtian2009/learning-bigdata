@@ -12,6 +12,7 @@
     <modules>
         <module>learning-hadoop</module>
         <module>learning-hbase</module>
+        <module>learing-spark</module>
     </modules>
 
     <properties>
